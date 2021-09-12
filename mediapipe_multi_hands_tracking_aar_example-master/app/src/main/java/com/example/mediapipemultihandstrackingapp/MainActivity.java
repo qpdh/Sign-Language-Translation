@@ -6,14 +6,19 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.Size;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
@@ -31,11 +36,15 @@ import com.google.mediapipe.glutil.EglManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Main activity of MediaPipe example apps.
  */
 public class MainActivity extends AppCompatActivity {
+    public TextView status;
+
     private static final String TAG = "MainActivity";
     private static final String BINARY_GRAPH_NAME = "hand_tracking_mobile_gpu.binarypb";
     private static final String INPUT_VIDEO_STREAM_NAME = "input_video";
@@ -49,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
     // This is needed because OpenGL represents images assuming the image origin is at the bottom-left
     // corner, whereas MediaPipe in general assumes the image origin is at top-left.
     private static final boolean FLIP_FRAMES_VERTICALLY = true;
+
+    private int from[][] = {{4, 4}, {6, 8}, {10, 12}, {14, 16}, {18, 20}};
+    private int to[][] = {{5, 10}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    private boolean open[] = {false, false, false, false, false};
+    private boolean gesture[][] = {
+            {true, true, true, true, true}, //빠
+            {true, true, false, false, false}, //찌
+            {false, true, true, false, false}, //찌
+            {false, false, false, false, false}}; //묵
+    private String gestureResult[] = {"Paper", "Scissors", "Scissors", "Rock"};
 
     static {
         // Load all native libraries needed by the app.
@@ -77,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayoutResId());
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        status = (TextView)findViewById(R.id.status);
 
         try {
             applicationInfo =
@@ -109,23 +134,34 @@ public class MainActivity extends AppCompatActivity {
         inputSidePackets.put(INPUT_NUM_HANDS_SIDE_PACKET_NAME, packetCreator.createInt32(NUM_HANDS));
         processor.setInputSidePackets(inputSidePackets);
 
-        // To show verbose logging, run:
-        // adb shell setprop log.tag.MainActivity VERBOSE
-        if (Log.isLoggable(TAG, Log.VERBOSE)) {
-            processor.addPacketCallback(
+
+        processor.addPacketCallback(
                     OUTPUT_LANDMARKS_STREAM_NAME,
                     (packet) -> {
-                        Log.v(TAG, "Received multi-hand landmarks packet.");
                         List<NormalizedLandmarkList> multiHandLandmarks =
                                 PacketGetter.getProtoVector(packet, NormalizedLandmarkList.parser());
-                        Log.v(
-                                TAG,
-                                "[TS:"
-                                        + packet.getTimestamp()
-                                        + "] "
-                                        + getMultiHandLandmarksDebugString(multiHandLandmarks));
+                        detection(multiHandLandmarks);
                     });
-        }
+
+
+        /////////////////////////////////////////로그////////////////////////////////////////////
+//        Log.d(TAG, "Loggable"+Log.isLoggable(TAG, Log.ERROR));
+//        if (Log.isLoggable(TAG, Log.ERROR)) {
+//            processor.addPacketCallback(
+//                    OUTPUT_LANDMARKS_STREAM_NAME,
+//                    (packet) -> {
+//                        Log.v(TAG, "Received multi-hand landmarks packet.");
+//                        List<NormalizedLandmarkList> multiHandLandmarks =
+//                                PacketGetter.getProtoVector(packet, NormalizedLandmarkList.parser());
+//                        Log.v(TAG,
+//                                "[TS:"
+//                                        + packet.getTimestamp()
+//                                        + "] "
+//                                        + getMultiHandLandmarksDebugString(multiHandLandmarks));
+//
+//                    });
+//        }
+        ////////////////////////////////////////////////////////////////////////////////////////
     }
 
     // Used to obtain the content view for this application. If you are extending this class, and
@@ -239,9 +275,13 @@ public class MainActivity extends AppCompatActivity {
         }
         String multiHandLandmarksStr = "Number of hands detected: " + multiHandLandmarks.size() + "\n";
         int handIndex = 0;
+        
+        //인식된 손 단위로 분할
         for (NormalizedLandmarkList landmarks : multiHandLandmarks) {
             multiHandLandmarksStr +=
                     "\t#Hand landmarks for hand[" + handIndex + "]: " + landmarks.getLandmarkCount() + "\n";
+
+            //손을 랜드마크 단위로 분할
             int landmarkIndex = 0;
             for (NormalizedLandmark landmark : landmarks.getLandmarkList()) {
                 multiHandLandmarksStr +=
@@ -259,5 +299,49 @@ public class MainActivity extends AppCompatActivity {
             ++handIndex;
         }
         return multiHandLandmarksStr;
+    }
+
+    private double dist(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2)) +
+                Math.sqrt(Math.pow(y1 - y2, 2)) +
+                Math.sqrt(Math.pow(z1 - z2, 2));
+    }
+
+    private void detection(List<NormalizedLandmarkList> multiHandLandmarks) {
+        //인식된 손 단위로 분할
+        for (NormalizedLandmarkList landmarks : multiHandLandmarks) {
+            //손을 랜드마크 단위로 분할
+
+            for (int i = 0; i < 5; ++i) {
+                open[i] = dist(
+                        landmarks.getLandmark(from[i][0]).getX(), landmarks.getLandmark(from[i][0]).getY(), landmarks.getLandmark(from[i][0]).getZ(),
+                        landmarks.getLandmark(to[i][0]).getX(), landmarks.getLandmark(to[i][0]).getY(), landmarks.getLandmark(from[i][0]).getZ())
+                        < dist(
+                        landmarks.getLandmark(from[i][1]).getX(), landmarks.getLandmark(from[i][1]).getY(), landmarks.getLandmark(from[i][1]).getZ(),
+                        landmarks.getLandmark(to[i][1]).getX(), landmarks.getLandmark(to[i][1]).getY(), landmarks.getLandmark(from[i][1]).getZ());
+            }
+
+            for (int i = 0; i < gesture.length; ++i) {
+                boolean flag = true;
+
+                for (int j = 0; j < 5; ++j) {
+                    if (gesture[i][j] != open[j]) {
+                        flag = false;
+                    }
+                }
+                int index = i;
+                if (flag == true) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            status.setText(gestureResult[index]);
+                            //Log.d(TAG, gestureResult[i]);
+                        }
+                    });
+                }
+                //손을 랜드마크 단위로 분할
+            }
+            //인식된 손 단위로 분할
+        }
     }
 }
