@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <FrameLayout
         android:id="@+id/preview_display_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:layout_weight="1">
         <TextView
             android:id="@+id/no_camera_access_view"
@@ -15,5 +17,21 @@
             android:layout_width="fill_parent"
             android:gravity="center"
             android:text="@string/no_camera_access" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:textSize="30dp"
+            android:textColor="#FF0000"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:text="null"/>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
