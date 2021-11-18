@@ -13,6 +13,9 @@ class WindowClass(QMainWindow, from_class):
         super().__init__()
         self.setupUi(self)
 
+        # 700*800 크기 고정
+        self.setFixedSize(700, 800)
+
         # 버튼에 기능을 연결하는 코드
         self.push_btn_number_setting.clicked.connect(self.buttonNumberSettingFunction)
         self.push_btn_english_setting.clicked.connect(self.buttonEnglishSettingFunction)
