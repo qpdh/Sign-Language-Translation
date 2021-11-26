@@ -1,6 +1,17 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from setting import *
+from video_cap import *
+
+import threading
+import mediapipe as mp
+import cv2
+import time
+import numpy as np
+from PyQt5 import QtGui
+
+#import tensorflow
 
 from_class = uic.loadUiType('main.ui')[0]
 
@@ -13,49 +24,36 @@ class WindowClass(QMainWindow, from_class):
         self.initUI()
 
     def initUI(self):
-        # 900*500 크기 고정
         self.setFixedSize(700, 800)
 
-        # 버튼에 기능을 연결하는 코드
+        start(self.cam_you)
+
+        # 언어변경
         self.pushButton_engNum.clicked.connect(self.changeLang)
 
-        # 구입
+        # 통화 연결
         self.pushButton_call.clicked.connect(self.call)
 
-    # 제품 버튼 리스너
+        # 설정
+        self.pushButton_setting.clicked.connect(self.settingButtonListener)
+
+    # 언어변경
     def changeLang(self):
         i = 'eng'
         print(i, 'changeLang clicked')
 
-    # 구매 버튼 리스너
+    # 통화 연결
     def call(self):
         print('call clicked')
 
-    # 입금 버튼 리스너
+    # 설정
     def settingButtonListener(self):
-        win = DepositDialog()
+        win = SettingDialog()
         win.showModal()
         print('insert button clicked')
 
-    # 잔돈 반환 버튼 리스너
-    def returnButtonListener(self):
-        print('return button clicked')
-
-    # 관리자 모드 버튼 리스너
-    def directorButtonListener(self):
-        win = ManagerDialog()
-        win.showModal()
-        print('director button clicked')
-
 if __name__ == "__main__":
-    # QApplication 프로그램을 실행시켜주는 클래스
     app = QApplication(sys.argv)
-
-    # WindowClass의 인스턴스생성
     myWindow = WindowClass()
-
-    # 프로그램 화면을 보여주는 코드
     myWindow.show()
-
-    # 프로그램을 이벤트 루프토 진입시키는(프로그램을 작동시키는)코드
     app.exec_()
