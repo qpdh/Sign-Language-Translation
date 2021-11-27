@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from PyQt5 import QtCore
 
 from_class = uic.loadUiType('setting.ui')[0]
 
@@ -14,5 +15,11 @@ class SettingDialog(QDialog, from_class):
     def initUI(self):
         self.setFixedSize(440, 220)
 
+        # self.pushButton_cancel.clicked.connect(QtCore.QCoreApplication.instance().quit())
+
+        self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+
     def showModal(self):
         return super().exec_()
+
+

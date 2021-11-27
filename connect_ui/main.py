@@ -26,8 +26,6 @@ class WindowClass(QMainWindow, from_class):
     def initUI(self):
         self.setFixedSize(700, 800)
 
-        start(self.cam_you)
-
         # 언어변경
         self.pushButton_engNum.clicked.connect(self.changeLang)
 
@@ -39,21 +37,29 @@ class WindowClass(QMainWindow, from_class):
 
     # 언어변경
     def changeLang(self):
-        i = 'eng'
-        print(i, 'changeLang clicked')
+        eng_num()
+        print('changeLang clicked')
 
     # 통화 연결
     def call(self):
+        global running
+        if running:
+            stop(self.textEdit_me)
+        else:
+            start()
         print('call clicked')
 
     # 설정
     def settingButtonListener(self):
+        stop(self.textEdit_me)
         win = SettingDialog()
         win.showModal()
-        print('insert button clicked')
+
+        print('setting button clicked')
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWindow = WindowClass()
     myWindow.show()
+    start(myWindow.cam_you, myWindow.textEdit_me)
     app.exec_()
