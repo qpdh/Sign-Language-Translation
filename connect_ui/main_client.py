@@ -2,6 +2,7 @@ from setting import *
 from video_cap import *
 from PyQt5 import QtGui
 import sys
+import socket_module
 
 from_class = uic.loadUiType('main.ui')[0]
 
@@ -12,6 +13,9 @@ class WindowClass(QMainWindow, from_class):
         super().__init__()
         self.setupUi(self)
         self.initUI()
+
+        # 클라이언트 소켓 생성
+        self.my_socket = socket_module.client_socket()
 
     def initUI(self):
         self.setFixedSize(700, 800)
@@ -52,9 +56,8 @@ class WindowClass(QMainWindow, from_class):
 
     def show(self):
         super().show()
-        self.my_video_cap = video_cap(self.cam_you, self.textEdit_me)
+        self.my_video_cap = video_cap(self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you )
         self.my_video_cap.start()
-
 
 
 if __name__ == "__main__":

@@ -4,16 +4,24 @@ import cv2
 import time
 import numpy as np
 from PyQt5 import QtGui
+import socket_module
 
 
 class video_cap:
+    SERVER = 0
+    CLIENT = 1
 
-    def __init__(self, cam_me, editText_me):
+    # self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you
+    def __init__(self, my_socket, cam_me, cam_you, editText_me, editText_you):
         self.th = None
         self.running = True
         self.isEng = True
         self.cam_me = cam_me
+        self.cam_you = cam_you
         self.editText_me = editText_me
+        self.editText_you = editText_you
+        self.my_socket = my_socket
+        self.my_image = None
 
     def capStart(self):
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -26,6 +34,12 @@ class video_cap:
         sentence = []
         actions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         actions_alpha = [chr(i) for i in range(65, 91)]
+
+        sendThread = threading.Thread(target=self.send_thread())
+        recvThread = threading.Thread(target=self.recv_thread())
+
+        sendThread.start()
+        recvThread.start()
 
         # model = tensorflow.keras.models.load_model('./OutputModel_Alpha')
 
@@ -150,6 +164,7 @@ class video_cap:
                                 # 문자 덧붙이기
                                 self.editText_me.insertPlainText(sentence[-1])
 
+                # 화면 출력용 리사이즈
                 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
                 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
                 self.cam_me.resize(width, height)
@@ -158,6 +173,8 @@ class video_cap:
                 pixmap = QtGui.QPixmap.fromImage(qImg)
                 self.cam_me.setPixmap(pixmap)
 
+                self.my_image = pixmap
+
                 # 종료 조건
                 if cv2.waitKey(10) & 0xFF == ord('q'):
                     break
@@ -165,6 +182,36 @@ class video_cap:
         cv2.destroyAllWindows()
 
     #################################################
+
+    def recv_thread(self):
+        # 서버, 클라이언트 소켓 판별
+        if self.my_socket.socketType == video_cap.SERVER:
+            data, addr = self.my_socket.my_socket.recvfrom(2048)
+            self.cam_you.setPixmap(data)
+
+        elif self.my_socket.socketType == video_cap.CLIENT:
+            while True:
+                data, addr = self.my_socket.my_socket.recvfrom(2048)
+                self.cam_you.setPixmap(data)
+
+        else:
+            pass
+
+    def send_thread(self):
+        # 서버, 클라이언트 소켓 판별
+        if self.my_socket.socketType == video_cap.SERVER:
+            while True:
+                if self.my_image == None:
+                    continue
+                self.my_socket.my_socket.sendto(self.my_image, ("192.168.0.2", 9999))
+
+        elif self.my_socket.socketType == video_cap.CLIENT:
+            while True:
+                if self.my_image == None:
+                    continue
+                self.my_socket.my_socket.sendto(self.my_image.encode(), ("210.99.147.179", 9999))
+        else:
+            pass
 
     def make_thread(self):
         try:
@@ -181,7 +228,7 @@ class video_cap:
         try:
             self.running = False
             self.th.join()
-            self.th=None
+            self.th = None
             print('stop (thread joined)')
         except AttributeError:
             print('join pass')
@@ -202,7 +249,6 @@ class video_cap:
             self.isEng = False
         else:
             self.isEng = True
-
 
 # class cam_me_thread(threading.Thread):
 #     def __init__(self, video):

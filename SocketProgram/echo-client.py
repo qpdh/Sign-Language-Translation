@@ -2,7 +2,7 @@ import socket
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-IP = "127.0.0.1"
+IP = "210.99.147.179"
 
 while True:
     msg = input('->')
