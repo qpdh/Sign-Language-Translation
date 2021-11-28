@@ -10,10 +10,10 @@ my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # 바인딩
-my_socket.bind(('', PORT))
+my_socket.bind(('218.1010.137.150', PORT))
 
 while True:
-    data, addr = my_socket.recvfrom(8000)
+    data, addr = my_socket.recvfrom(1024)
     data = data.decode().upper()
     print('client : ', data)
     my_socket.sendto(data.encode(), addr)

@@ -19,12 +19,13 @@ class video_cap:
         self.th = None
         self.running = True
         self.isEng = True
-        self.cam_me = cam_you
-        self.cam_you = cam_me
+        self.cam_me = cam_me
+        self.cam_you = cam_you
         self.editText_me = editText_me
         self.editText_you = editText_you
         self.my_socket = my_socket
         self.my_image = None
+        self.addr = None
 
     def capStart(self):
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -171,7 +172,8 @@ class video_cap:
                 # 화면 출력용 리사이즈
                 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
                 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-                self.cam_me.resize(width, height)
+                # self.cam_me.resize(160, 120)
+
                 h, w, c = imgRGB.shape
                 qImg = QtGui.QImage(imgRGB.data, w, h, w * c, QtGui.QImage.Format_RGB888)
                 pixmap = QtGui.QPixmap.fromImage(qImg)
@@ -194,7 +196,8 @@ class video_cap:
                 totalData = 0
 
                 while True:
-                    data, addr = self.my_socket.my_socket.recvfrom(1024)
+                    data, addr = self.my_socket.my_socket.recv(1024)
+                    self.addr = addr
 
                     totalData += data
                     if sys.getsizeof(data) < 1024:
@@ -212,7 +215,7 @@ class video_cap:
                 totalData = 0
 
                 while True:
-                    data, addr = self.my_socket.my_socket.recvfrom(1024)
+                    data, addr = self.my_socket.my_socket.recv(1024)
 
                     totalData += data
                     if sys.getsizeof(data) < 1024:
@@ -243,9 +246,8 @@ class video_cap:
                 pixmap_bytes = ba.data()
                 print(type(pixmap_bytes))
 
-                self.my_socket.my_socket.sendto(pixmap_bytes, ("192.168.0.2", 9999))
-
-
+                if self.addr is not None:
+                    self.my_socket.my_socket.send(pixmap_bytes)
 
         elif self.my_socket.socketType == video_cap.CLIENT:
             while True:
@@ -263,7 +265,8 @@ class video_cap:
                 import sys
                 print(sys.getsizeof(pixmap_bytes))
 
-                self.my_socket.my_socket.sendto(pixmap_bytes, ("210.99.147.179", 9999))
+                self.my_socket.my_socket.send(pixmap_bytes)
+
         else:
             pass
 
