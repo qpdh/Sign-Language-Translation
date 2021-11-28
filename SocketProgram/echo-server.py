@@ -13,7 +13,7 @@ my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 my_socket.bind(('', PORT))
 
 while True:
-    data, addr = my_socket.recvfrom(1024)
+    data, addr = my_socket.recvfrom(8000)
     data = data.decode().upper()
     print('client : ', data)
     my_socket.sendto(data.encode(), addr)

@@ -28,7 +28,7 @@ class client_socket:
     def __init__(self):
         self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-        self.IP = "127.0.0.1"
+        self.IP = "210.99.147.179"
         # 포트번호
         self.PORT = 9999
 

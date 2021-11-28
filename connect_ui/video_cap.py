@@ -1,3 +1,4 @@
+import sys
 import threading
 import mediapipe as mp
 import cv2
@@ -38,11 +39,9 @@ class video_cap:
         actions_alpha = [chr(i) for i in range(65, 91)]
 
         sendThread = threading.Thread(target=self.send_thread)
-        recvThread = threading.Thread(target=self.recv_thread)
-
-        # sendThread.daemon = True
-        # recvThread.daemon = True
         sendThread.start()
+
+        recvThread = threading.Thread(target=self.recv_thread)
         recvThread.start()
 
         # model = tensorflow.keras.models.load_model('./OutputModel_Alpha')
@@ -192,9 +191,16 @@ class video_cap:
         # 서버, 클라이언트 소켓 판별
         if self.my_socket.socketType == video_cap.SERVER:
             while True:
-                data, addr = self.my_socket.my_socket.recvfrom(7416)
+                totalData = 0
 
-                ba = QtCore.QByteArray(data)
+                while True:
+                    data, addr = self.my_socket.my_socket.recvfrom(1024)
+
+                    totalData += data
+                    if sys.getsizeof(data) < 1024:
+                        break
+
+                ba = QtCore.QByteArray(totalData)
                 pixmap = QtGui.QPixmap()
                 ok = pixmap.loadFromData(ba, "PNG")
                 assert ok
@@ -203,15 +209,20 @@ class video_cap:
 
         elif self.my_socket.socketType == video_cap.CLIENT:
             while True:
-                print('recv test')
-                data, addr = self.my_socket.my_socket.recvfrom(7416)
+                totalData = 0
 
-                ba = QtCore.QByteArray(data)
+                while True:
+                    data, addr = self.my_socket.my_socket.recvfrom(1024)
+
+                    totalData += data
+                    if sys.getsizeof(data) < 1024:
+                        break
+
+                ba = QtCore.QByteArray(totalData)
                 pixmap = QtGui.QPixmap()
                 ok = pixmap.loadFromData(ba, "PNG")
                 assert ok
                 print(type(pixmap))
-
                 self.cam_you.setPixmap(pixmap)
 
         else:
@@ -234,6 +245,8 @@ class video_cap:
 
                 self.my_socket.my_socket.sendto(pixmap_bytes, ("192.168.0.2", 9999))
 
+
+
         elif self.my_socket.socketType == video_cap.CLIENT:
             while True:
                 if self.my_image is None:
@@ -246,6 +259,9 @@ class video_cap:
                 assert ok
                 pixmap_bytes = ba.data()
                 print(type(pixmap_bytes))
+
+                import sys
+                print(sys.getsizeof(pixmap_bytes))
 
                 self.my_socket.my_socket.sendto(pixmap_bytes, ("210.99.147.179", 9999))
         else:
