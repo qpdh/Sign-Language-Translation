@@ -80,5 +80,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_cancel</sender>
+   <signal>pressed()</signal>
+   <receiver>lineEdit</receiver>
+   <slot>undo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>released()</signal>
+   <receiver>pushButton_2</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>328</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
