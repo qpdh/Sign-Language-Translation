@@ -42,7 +42,7 @@ class Ui_Dialog(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "영어 수화"))
         self.label_2.setText(_translate("Dialog", "<html><head/><body><p><img src=\":/newPrefix/num.JPG\"/></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "숫자 지화"))
-import aa_rc
+
 
 
 if __name__ == "__main__":

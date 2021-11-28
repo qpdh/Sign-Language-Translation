@@ -1,17 +1,16 @@
 from setting import *
 from video_cap import *
 from PyQt5 import QtGui
-
-#import tensorflow
+import sys
 
 from_class = uic.loadUiType('main.ui')[0]
+
 
 # 화면을 띄우는데 사용되는 class 선언
 class WindowClass(QMainWindow, from_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
         self.initUI()
 
     def initUI(self):
@@ -28,33 +27,38 @@ class WindowClass(QMainWindow, from_class):
 
     # 언어변경
     def changeLang(self):
-        eng_num()
+        self.my_video_cap.eng_num()
         print('changeLang clicked')
 
     # 통화 연결
     def call(self):
-        global running
-        print(running)
-        if running:
+        print(self.my_video_cap.running)
+
+        if self.my_video_cap.running:
             self.textEdit_me.clear()
             self.cam_you.setPixmap(QtGui.QPixmap('stop.png'))
-            stop()
-            running = False
+            self.my_video_cap.stop()
         else:
-            print('b')
-            start()
+            print('main.call (running state : false)')
+            self.my_video_cap.start()
 
     # 설정
     def settingButtonListener(self):
-        stop()
+        self.my_video_cap.stop()
         win = SettingDialog()
         win.showModal()
 
         print('setting button clicked')
 
+    def show(self):
+        super().show()
+        self.my_video_cap = video_cap(self.cam_you, self.textEdit_me)
+        self.my_video_cap.start()
+
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWindow = WindowClass()
     myWindow.show()
-    start(myWindow.cam_you, myWindow.textEdit_me)
     app.exec_()
