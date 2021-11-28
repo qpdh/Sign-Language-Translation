@@ -1,14 +1,5 @@
-import sys
-from PyQt5.QtWidgets import *
-from PyQt5 import uic
 from setting import *
 from video_cap import *
-
-import threading
-import mediapipe as mp
-import cv2
-import time
-import numpy as np
 from PyQt5 import QtGui
 
 #import tensorflow
@@ -43,15 +34,19 @@ class WindowClass(QMainWindow, from_class):
     # 통화 연결
     def call(self):
         global running
+        print(running)
         if running:
-            stop(self.textEdit_me)
+            self.textEdit_me.clear()
+            self.cam_you.setPixmap(QtGui.QPixmap('stop.png'))
+            stop()
+            running = False
         else:
+            print('b')
             start()
-        print('call clicked')
 
     # 설정
     def settingButtonListener(self):
-        stop(self.textEdit_me)
+        stop()
         win = SettingDialog()
         win.showModal()
 

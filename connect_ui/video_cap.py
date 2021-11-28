@@ -1,3 +1,4 @@
+import sys
 import threading
 import mediapipe as mp
 import cv2
@@ -5,10 +6,13 @@ import time
 import numpy as np
 from PyQt5 import QtGui
 
+global th
 global running
 global isEng
-running = False
-isEng = False
+
+th = None
+running = True
+isEng = True
 
 def capStart(qtLabel, textEdit_me):
     global running
@@ -121,12 +125,12 @@ def capStart(qtLabel, textEdit_me):
 
                     # 영어
                     if isEng:
-                        index = chr(int(results[0][0]) + 48)
-                        list = actions
-                    # 숫자
-                    else:
                         index = chr(int(results[0][0]) + 65)
                         list = actions_alpha
+                    # 숫자
+                    else:
+                        index = chr(int(results[0][0]) + 48)
+                        list = actions
 
                     if index in list:
                         if len(sentence) > 0:
@@ -141,13 +145,11 @@ def capStart(qtLabel, textEdit_me):
                                         # if actions[np.argmax(res)] != sentence[-1]:
                                         # 이전 제스쳐와 다르면 시간재기
                                         # 문자 덧붙이기
-                                        textEdit_me.insertPlainText(sentence[len(sentence) - 1])
+                                        textEdit_me.insertPlainText(sentence[-1])
                         else:
                             sentence.append(index)
                             # 문자 덧붙이기
-                            textEdit_me.insertPlainText(sentence[len(sentence) - 1])
-
-
+                            textEdit_me.insertPlainText(sentence[-1])
 
             width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
             height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -164,10 +166,6 @@ def capStart(qtLabel, textEdit_me):
     cv2.destroyAllWindows()
 #################################################
 
-#쓰레드 함수
-global th
-th = None
-
 def make_thread(qtLabel, textEdit_me):
     global th
     try:
@@ -176,19 +174,23 @@ def make_thread(qtLabel, textEdit_me):
     except AttributeError:
         th = threading.Thread(target=capStart(qtLabel, textEdit_me))
 
-def stop(textEdit_me):
+def stop():
     global running
     global th
+    try:
+        th.join()
+    except AttributeError:
+        print('join pass')
     running = False
-    textEdit_me.clear()
 
 def start(qtLabel, textEdit_me):
     global running
     global th
     running = True
-    if threading.active_count() == 1:
+    print(th)
+    if th is None:
         make_thread(qtLabel, textEdit_me)
-        th.start()
+    th.start()
     
 def on_exit():
     stop()
@@ -200,7 +202,3 @@ def eng_num():
         isEng = False
     else:
         isEng = True
-
-def write_below(textEdit_me):
-
-    print('a')
