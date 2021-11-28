@@ -4,6 +4,8 @@ import cv2
 import time
 import numpy as np
 from PyQt5 import QtGui
+from qtpy import QtCore
+
 import socket_module
 
 
@@ -16,8 +18,8 @@ class video_cap:
         self.th = None
         self.running = True
         self.isEng = True
-        self.cam_me = cam_me
-        self.cam_you = cam_you
+        self.cam_me = cam_you
+        self.cam_you = cam_me
         self.editText_me = editText_me
         self.editText_you = editText_you
         self.my_socket = my_socket
@@ -35,9 +37,11 @@ class video_cap:
         actions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         actions_alpha = [chr(i) for i in range(65, 91)]
 
-        sendThread = threading.Thread(target=self.send_thread())
-        recvThread = threading.Thread(target=self.recv_thread())
+        sendThread = threading.Thread(target=self.send_thread)
+        recvThread = threading.Thread(target=self.recv_thread)
 
+        # sendThread.daemon = True
+        # recvThread.daemon = True
         sendThread.start()
         recvThread.start()
 
@@ -117,6 +121,7 @@ class video_cap:
                 min_detection_confidence=0.5,
                 min_tracking_confidence=0.5) as hands:
             while cap.isOpened() and self.running:
+                print('while')
                 success, image = cap.read()
 
                 if not success:
@@ -186,13 +191,28 @@ class video_cap:
     def recv_thread(self):
         # 서버, 클라이언트 소켓 판별
         if self.my_socket.socketType == video_cap.SERVER:
-            data, addr = self.my_socket.my_socket.recvfrom(2048)
-            self.cam_you.setPixmap(data)
+            while True:
+                data, addr = self.my_socket.my_socket.recvfrom(7416)
+
+                ba = QtCore.QByteArray(data)
+                pixmap = QtGui.QPixmap()
+                ok = pixmap.loadFromData(ba, "PNG")
+                assert ok
+                print(type(pixmap))
+                self.cam_you.setPixmap(pixmap)
 
         elif self.my_socket.socketType == video_cap.CLIENT:
             while True:
-                data, addr = self.my_socket.my_socket.recvfrom(2048)
-                self.cam_you.setPixmap(data)
+                print('recv test')
+                data, addr = self.my_socket.my_socket.recvfrom(7416)
+
+                ba = QtCore.QByteArray(data)
+                pixmap = QtGui.QPixmap()
+                ok = pixmap.loadFromData(ba, "PNG")
+                assert ok
+                print(type(pixmap))
+
+                self.cam_you.setPixmap(pixmap)
 
         else:
             pass
@@ -201,15 +221,33 @@ class video_cap:
         # 서버, 클라이언트 소켓 판별
         if self.my_socket.socketType == video_cap.SERVER:
             while True:
-                if self.my_image == None:
+                if self.my_image is None:
                     continue
-                self.my_socket.my_socket.sendto(self.my_image, ("192.168.0.2", 9999))
+
+                ba = QtCore.QByteArray()
+                buff = QtCore.QBuffer(ba)
+                buff.open(QtCore.QIODevice.WriteOnly)
+                ok = self.my_image.save(buff, "PNG")
+                assert ok
+                pixmap_bytes = ba.data()
+                print(type(pixmap_bytes))
+
+                self.my_socket.my_socket.sendto(pixmap_bytes, ("192.168.0.2", 9999))
 
         elif self.my_socket.socketType == video_cap.CLIENT:
             while True:
-                if self.my_image == None:
+                if self.my_image is None:
                     continue
-                self.my_socket.my_socket.sendto(self.my_image.encode(), ("210.99.147.179", 9999))
+
+                ba = QtCore.QByteArray()
+                buff = QtCore.QBuffer(ba)
+                buff.open(QtCore.QIODevice.WriteOnly)
+                ok = self.my_image.save(buff, "PNG")
+                assert ok
+                pixmap_bytes = ba.data()
+                print(type(pixmap_bytes))
+
+                self.my_socket.my_socket.sendto(pixmap_bytes, ("210.99.147.179", 9999))
         else:
             pass
 
