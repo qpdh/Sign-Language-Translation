@@ -43,7 +43,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>setting.png</normaloff>setting.png</iconset>
+      <normaloff>images/setting.png</normaloff>images/setting.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -250,7 +250,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>connect.png</normaloff>connect.png</iconset>
+      <normaloff>images/connect.png</normaloff>images/connect.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -340,7 +340,7 @@ font:10pt &quot;나눔바른고딕&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>691</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
