@@ -2,61 +2,17 @@ from PyQt5 import QtGui
 import sys
 from SLT.modules import socket_module
 
-from SLT.components.improve import *
-from SLT.components.setting import *
 from SLT.components.help import *
+
+from modules.main_module import MainModule
 
 from_class = uic.loadUiType('./ui/main.ui')[0]
 
+
 # 화면을 띄우는데 사용되는 class 선언
-class WindowClass(QMainWindow, from_class):
+class WindowClass(MainModule):
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
-        self.initUI()
-
-    def initUI(self):
-        self.setFixedSize(700, 800)
-
-        # 언어변경
-        self.pushButton_engNum.clicked.connect(self.changeLang)
-
-        # 통화 연결
-        self.pushButton_call.clicked.connect(self.call)
-
-        # 설정
-        self.pushButton_setting.clicked.connect(self.settingButtonListener)
-
-        # 인식개선
-        self.pushButton_improve.clicked.connect(self.improveButtonListener)
-
-        # 지화보기
-        self.pushButton_help.clicked.connect(self.pictureButtonListener)
-
-    # 설정
-    def settingButtonListener(self):
-        #self.my_video_cap.stop()
-        win = SettingDialog()
-        win.showModal()
-
-    # 인식개선
-    def improveButtonListener(self):
-        print('improve button clicked')
-        # self.my_video_cap.stop()
-        win = ImproveDialog()
-        win.showModal()
-
-    # 지화보기
-    def pictureButtonListener(self):
-        print('pic button clicked')
-        # self.my_video_cap.stop()
-        win = PicDialog()
-        win.showModal()
-
-    # 언어변경
-    def changeLang(self):
-        self.my_video_cap.eng_num()
-        print('changeLang clicked')
 
     # 통화 연결
     def call(self):
@@ -73,8 +29,6 @@ class WindowClass(QMainWindow, from_class):
             print('main.call (running state : false)')
             self.my_video_cap.start()
 
-    def show(self):
-        super().show()
         # self.my_video_cap = video_cap(self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you)
         # self.my_video_cap.start()
 
