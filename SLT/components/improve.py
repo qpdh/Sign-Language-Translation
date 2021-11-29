@@ -13,9 +13,11 @@ class ImproveDialog(QDialog, from_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        self.capture = VideoCapture(self.cam_me)
+
         self.initUI()
-        # self.capture = VideoCapture(self.cam_me)
-        print('생성자 호출 완료')
+
 
     def initUI(self):
         # 700*800 크기 고정
@@ -68,6 +70,8 @@ class ImproveDialog(QDialog, from_class):
         self.pushButton_x.clicked.connect(self.ButtonListener_x)
         self.pushButton_y.clicked.connect(self.ButtonListener_y)
         self.pushButton_z.clicked.connect(self.ButtonListener_z)
+
+        self.capture.start()
 
     # 0~9버튼 클릭
     def pushButton_0(self):
