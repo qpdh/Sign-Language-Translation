@@ -6,12 +6,16 @@ import numpy as np
 from PyQt5 import QtGui
 
 
-class video_cap:
-    SERVER = 0
-    CLIENT = 1
-
+class VideoCapture:
     # self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you
-    def __init__(self, my_socket, cam_me, cam_you, editText_me, editText_you):
+    def __init__(self, cam_me):
+        self.th = None
+        self.running = True
+        self.isEng = True
+        self.cam_me = cam_me
+        print('생성자 호출 완료')
+
+    def __init__(self, cam_me, cam_you, editText_me, editText_you, my_socket=None):
         self.th = None
         self.running = True
         self.isEng = True
@@ -104,15 +108,6 @@ class video_cap:
         knn = cv2.ml.KNearest_create()
         knn.train(angle, cv2.ml.ROW_SAMPLE, label)
 
-        # file_alpha = np.genfromtxt('./dataset/DataSet.txt', delimiter=',')
-        # angleFile_alpha = file_alpha[:, :-1]
-        # labelFile_alpha = file_alpha[:, -1]
-        #
-        # angle_alpha = angleFile_alpha.astype(np.float32)
-        # label_alpha = labelFile_alpha.astype(np.float32)
-        # knn_alpha = cv2.ml.KNearest_create()
-        # knn_alpha.train(angle_alpha, cv2.ml.ROW_SAMPLE, label_alpha)
-
         with mp_hands.Hands(
                 min_detection_confidence=0.5,
                 min_tracking_confidence=0.5) as hands:
@@ -159,51 +154,24 @@ class video_cap:
                                             # if actions[np.argmax(res)] != sentence[-1]:
                                             # 이전 제스쳐와 다르면 시간재기
                                             # 문자 덧붙이기
-                                            self.editText_me.insertPlainText(sentence[-1])
+                                            if self.editText_me is not None:
+                                                self.editText_me.insertPlainText(sentence[-1])
                             else:
                                 sentence.append(index)
                                 # 문자 덧붙이기
-                                self.editText_me.insertPlainText(sentence[-1])
+                                if self.editText_me is not None:
+                                    self.editText_me.insertPlainText(sentence[-1])
 
                 # 화면 출력용 리사이즈
                 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
                 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-                # self.cam_me.resize(160, 120)
 
                 h, w, c = imgRGB.shape
                 qImg = QtGui.QImage(imgRGB.data, w, h, w * c, QtGui.QImage.Format_RGB888)
                 pixmap = QtGui.QPixmap.fromImage(qImg)
 
-                # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
-                # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
                 self.cam_me.setPixmap(pixmap)
 
-                # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, width)
-                # cap.set(cv2.CAP_PROP_FRAME_WIDTH, height)
-
-                # convert Mat to byte for sending to client
-                ret, imgencoded = cv2.imencode('.jpg', imgRGB)
-                byte_img = np.array(imgencoded)
-
-                int_len_byte_img = len(byte_img)
-                bytes_len_img = int_len_byte_img.to_bytes(4, byteorder='big')
-
-                # ba = QtCore.QByteArray()
-                # buff = QtCore.QBuffer(ba)
-                # buff.open(QtCore.QIODevice.WriteOnly)
-                # ok = pixmap.save(buff, "png")
-                # assert ok
-                # pixmap_bytes = ba.data()
-                # print(type(pixmap_bytes))
-
-                if self.my_socket.socketType == video_cap.SERVER:
-                    self.my_socket.targetSocket.send(bytes_len_img)
-                    self.my_socket.targetSocket.send(byte_img)
-                elif self.my_socket.socketType == video_cap.CLIENT:
-                    self.my_socket.my_socket.send(bytes_len_img)
-                    self.my_socket.my_socket.send(byte_img)
-                else:
-                    pass
         cap.release()
         cv2.destroyAllWindows()
 
@@ -236,60 +204,6 @@ class video_cap:
         result.reverse()
 
         return result
-
-    def recv_thread(self):
-        # 서버, 클라이언트 소켓 판별
-        if self.my_socket.socketType == video_cap.SERVER:
-            while True:
-                # dataSize = self.my_socket.targetSocket.recv(4)
-                # print(int.from_bytes(dataSize, byteorder='big'))
-                # data = self.my_socket.targetSocket.recv(int.from_bytes(dataSize, byteorder='big'))
-                #
-                # ba = QtCore.QByteArray(data)
-                # pixmap = QtGui.QPixmap()
-                # ok = pixmap.loadFromData(ba, "png")
-                # assert ok
-                bytes_buf = self.receive_all(self.my_socket.targetSocket, 4)
-                bytes_length = self.bytes_to_int(bytes_buf)
-                print("Rx Length = {} ".format(bytes_length))
-                byte_data = self.receive_all(self.my_socket.targetSocket, int(bytes_length))
-                # convert jpg image to matix
-                g_decode_img = np.frombuffer(byte_data, dtype=np.uint8)
-                g_decode_img = cv2.imdecode(g_decode_img, cv2.COLOR_RGB2BGR)
-
-                h, w, c = g_decode_img.shape
-                qImg = QtGui.QImage(g_decode_img.data, w, h, w * c, QtGui.QImage.Format_RGB888)
-                pixmap = QtGui.QPixmap.fromImage(qImg)
-
-                self.cam_you.setPixmap(pixmap)
-
-        elif self.my_socket.socketType == video_cap.CLIENT:
-            while True:
-                # dataSize = self.my_socket.my_socket.recv(4)
-                # print(int.from_bytes(dataSize, byteorder='big'))
-                # data = self.my_socket.my_socket.recv(int.from_bytes(dataSize, byteorder='big'))
-                #
-                # ba = QtCore.QByteArray(data)
-                # pixmap = QtGui.QPixmap()
-                # ok = pixmap.loadFromData(ba, "png")
-                # assert ok
-                #
-                # self.cam_you.setPixmap(pixmap)
-                bytes_buf = self.receive_all(self.my_socket.my_socket, 4)
-                bytes_length = self.bytes_to_int(bytes_buf)
-                print("Rx Length = {} ".format(bytes_length))
-                byte_data = self.receive_all(self.my_socket.my_socket, int(bytes_length))
-                # convert jpg image to matix
-                g_decode_img = np.frombuffer(byte_data, dtype=np.uint8)
-                g_decode_img = cv2.imdecode(g_decode_img, cv2.COLOR_RGB2BGR)
-
-                h, w, c = g_decode_img.shape
-                qImg = QtGui.QImage(g_decode_img.data, w, h, w * c, QtGui.QImage.Format_RGB888)
-                pixmap = QtGui.QPixmap.fromImage(qImg)
-
-                self.cam_you.setPixmap(pixmap)
-        else:
-            pass
 
     def make_thread(self):
         try:

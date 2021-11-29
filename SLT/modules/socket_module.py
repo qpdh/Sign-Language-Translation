@@ -2,10 +2,10 @@ import socket
 
 
 class server_socket:
-    def __init__(self):
-        # 포트번호
-        self.PORT = 9999
+    # 포트번호
+    PORT = 9999
 
+    def __init__(self):
         # 소켓 생성 UDP , IPv4
         self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -13,7 +13,7 @@ class server_socket:
         self.my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         # 바인딩
-        self.my_socket.bind(('0.0.0.0', self.PORT))
+        self.my_socket.bind(('0.0.0.0', server_socket.PORT))
 
         self.my_socket.listen(1)
 
@@ -23,24 +23,14 @@ class server_socket:
 
         self.socketType = 0
 
-    # while True:
-    #     data, addr = server_socket.recvfrom(1024)
-    #     data = data.decode().upper()
-    #     print('client : ', data)
-    #     server_socket.sendto(data.encode(), addr)
-
 
 class client_socket:
-    def __init__(self):
+    # 포트번호
+    PORT = 9999
+
+    def __init__(self, ip):
         self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.my_socket.connect(('1.241.73.157', 9999))
-        self.IP = "210.99.147.179"
-        # 포트번호
-        self.PORT = 9999
+        self.ip = ip
+        self.my_socket.connect((ip, client_socket.PORT))
 
         self.socketType = 1
-    # while True:
-    #     data, addr = server_socket.recvfrom(1024)
-    #     data = data.decode().upper()
-    #     print('client : ', data)
-    #     server_socket.sendto(data.encode(), addr)

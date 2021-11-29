@@ -35,7 +35,10 @@ class MainModule(QMainWindow, from_class):
         self.my_video_cap.eng_num()
         print('changeLang clicked')
 
-    # 통화 연결
+    # 통화 연결 
+    # main_server
+    # main_client 
+    # 에서 구현할 것
     def call(self):
         pass
 

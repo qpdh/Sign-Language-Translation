@@ -43,7 +43,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>images/setting.png</normaloff>images/setting.png</iconset>
+      <normaloff>../images/setting.png</normaloff>../images/setting.png</iconset>
     </property>
     <property name="iconSize">
      <size>

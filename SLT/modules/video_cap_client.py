@@ -4,14 +4,14 @@ import cv2
 import time
 import numpy as np
 from PyQt5 import QtGui
-from video_cap import video_cap
+from SLT.modules.video_cap import VideoCapture
 
 
-class video_cap(video_cap):
+class VideoCaptureClient(VideoCapture):
 
     # self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you
-    def __init__(self, my_socket, cam_me, cam_you, editText_me, editText_you):
-        super().__init__(my_socket, cam_me, cam_you, editText_me, editText_you)
+    def __init__(self, cam_me, cam_you, editText_me, editText_you, my_socket):
+        super().__init__(cam_me, cam_you, editText_me, editText_you, my_socket)
 
     def capStart(self):
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
