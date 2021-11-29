@@ -8,14 +8,9 @@ from PyQt5 import QtGui
 
 class VideoCapture:
     # self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you
-    def __init__(self, cam_me):
-        self.th = None
-        self.running = True
-        self.isEng = True
-        self.cam_me = cam_me
-        print('생성자 호출 완료')
 
-    def __init__(self, cam_me, cam_you, editText_me, editText_you, my_socket=None):
+    def __init__(self, cam_me, cam_you=None, editText_me=None, editText_you=None, my_socket=None):
+        print('video_cap 생성자 호출 시작')
         self.th = None
         self.running = True
         self.isEng = True
@@ -26,6 +21,7 @@ class VideoCapture:
         self.my_socket = my_socket
         self.my_image = None
         self.addr = None
+        print('video_cap 생성자 호출 종료')
 
     def capStart(self):
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -38,9 +34,6 @@ class VideoCapture:
         sentence = []
         actions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         actions_alpha = [chr(i) for i in range(65, 91)]
-
-        recvThread = threading.Thread(target=self.recv_thread)
-        recvThread.start()
 
         # sendThread = threading.Thread(target=self.send_thread)
         # sendThread.start()
@@ -154,12 +147,16 @@ class VideoCapture:
                                             # if actions[np.argmax(res)] != sentence[-1]:
                                             # 이전 제스쳐와 다르면 시간재기
                                             # 문자 덧붙이기
-                                            if self.editText_me is not None:
+                                            if self.editText_me is None:
+                                                pass
+                                            else:
                                                 self.editText_me.insertPlainText(sentence[-1])
                             else:
                                 sentence.append(index)
                                 # 문자 덧붙이기
-                                if self.editText_me is not None:
+                                if self.editText_me is None:
+                                    pass
+                                else:
                                     self.editText_me.insertPlainText(sentence[-1])
 
                 # 화면 출력용 리사이즈
@@ -206,6 +203,7 @@ class VideoCapture:
         return result
 
     def make_thread(self):
+        print('call make_thread')
         try:
             if self.th is None:
                 print('make_thread before')
@@ -226,7 +224,7 @@ class VideoCapture:
             print('join pass')
 
     def start(self):
-        print('start')
+        print('call start')
         self.running = True
         self.make_thread()
         print('start : call make_thread')
