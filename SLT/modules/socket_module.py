@@ -19,6 +19,8 @@ class server_socket:
 
         conn, addr = self.my_socket.accept()
 
+        self.targetSocket = conn
+
         self.socketType = 0
 
     # while True:

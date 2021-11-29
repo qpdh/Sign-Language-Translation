@@ -1,76 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>894</width>
-    <height>706</height>
+    <width>680</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Form</string>
   </property>
+  <widget class="QPushButton" name="pushButton_ok">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>600</y>
+     <width>100</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>닫기</string>
+   </property>
+  </widget>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>10</y>
-     <width>641</width>
-     <height>561</height>
+     <x>20</x>
+     <y>20</y>
+     <width>611</width>
+     <height>551</height>
     </rect>
    </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="tab">
+   <widget class="QWidget" name="eng">
     <attribute name="title">
-     <string>영어 수화</string>
+     <string>영어</string>
     </attribute>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>-50</x>
+       <x>-20</x>
        <y>-40</y>
-       <width>961</width>
-       <height>621</height>
+       <width>691</width>
+       <height>611</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>images/img.png</pixmap>
+      <pixmap>images/help_alpha.png</pixmap>
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_2">
+   <widget class="QWidget" name="num">
     <attribute name="title">
-     <string>숫자 지화</string>
+     <string>숫자</string>
     </attribute>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>40</y>
-       <width>661</width>
-       <height>431</height>
+       <y>10</y>
+       <width>601</width>
+       <height>461</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>images/num.JPG</pixmap>
+      <pixmap>images/help_digit.JPG</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
      </property>
     </widget>
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="aa.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

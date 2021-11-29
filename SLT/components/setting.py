@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5 import QtCore
 
-from_class = uic.loadUiType('setting.ui')[0]
+from_class = uic.loadUiType('./ui/setting.ui')[0]
 
 # 화면을 띄우는데 사용되는 class 선언
 class SettingDialog(QDialog, from_class):
@@ -11,12 +11,19 @@ class SettingDialog(QDialog, from_class):
         self.setupUi(self)
         self.initUI()
 
+        # 적용
+        self.pushButton_ok.clicked.connect(self.okButtonListener)
+
     def initUI(self):
         self.setFixedSize(440, 220)
 
         # self.pushButton_cancel.clicked.connect(QtCore.QCoreApplication.instance().quit())
 
         self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+
+    def okButtonListener(self):
+        self.deleteLater()
+
 
     def showModal(self):
         return super().exec_()

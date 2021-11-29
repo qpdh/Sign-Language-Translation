@@ -1,13 +1,9 @@
-import sys
 import threading
 import mediapipe as mp
 import cv2
 import time
 import numpy as np
 from PyQt5 import QtGui
-from qtpy import QtCore
-
-import socket_module
 
 
 class video_cap:
@@ -39,11 +35,11 @@ class video_cap:
         actions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         actions_alpha = [chr(i) for i in range(65, 91)]
 
-        sendThread = threading.Thread(target=self.send_thread)
-        sendThread.start()
-
         recvThread = threading.Thread(target=self.recv_thread)
         recvThread.start()
+
+        # sendThread = threading.Thread(target=self.send_thread)
+        # sendThread.start()
 
         # model = tensorflow.keras.models.load_model('./OutputModel_Alpha')
 
@@ -121,7 +117,7 @@ class video_cap:
                 min_detection_confidence=0.5,
                 min_tracking_confidence=0.5) as hands:
             while cap.isOpened() and self.running:
-                print('while')
+                # print('while')
                 success, image = cap.read()
 
                 if not success:
@@ -177,96 +173,121 @@ class video_cap:
                 h, w, c = imgRGB.shape
                 qImg = QtGui.QImage(imgRGB.data, w, h, w * c, QtGui.QImage.Format_RGB888)
                 pixmap = QtGui.QPixmap.fromImage(qImg)
+
+                # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
+                # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
                 self.cam_me.setPixmap(pixmap)
 
-                self.my_image = pixmap
+                # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, width)
+                # cap.set(cv2.CAP_PROP_FRAME_WIDTH, height)
 
-                # 종료 조건
-                if cv2.waitKey(10) & 0xFF == ord('q'):
-                    break
+                # convert Mat to byte for sending to client
+                ret, imgencoded = cv2.imencode('.jpg', imgRGB)
+                byte_img = np.array(imgencoded)
+
+                int_len_byte_img = len(byte_img)
+                bytes_len_img = int_len_byte_img.to_bytes(4, byteorder='big')
+
+                # ba = QtCore.QByteArray()
+                # buff = QtCore.QBuffer(ba)
+                # buff.open(QtCore.QIODevice.WriteOnly)
+                # ok = pixmap.save(buff, "png")
+                # assert ok
+                # pixmap_bytes = ba.data()
+                # print(type(pixmap_bytes))
+
+                if self.my_socket.socketType == video_cap.SERVER:
+                    self.my_socket.targetSocket.send(bytes_len_img)
+                    self.my_socket.targetSocket.send(byte_img)
+                elif self.my_socket.socketType == video_cap.CLIENT:
+                    self.my_socket.my_socket.send(bytes_len_img)
+                    self.my_socket.my_socket.send(byte_img)
+                else:
+                    pass
         cap.release()
         cv2.destroyAllWindows()
 
     #################################################
+    def receive_all(self, sock, count):
+        buf = bytearray(b'')
+
+        while count:
+            newbuff = sock.recv(count)
+            if not newbuff:
+                return None
+            buf += newbuff
+            count -= len(newbuff)
+        return buf
+
+    def bytes_to_int(self, bytes):
+        result = 0
+
+        for b in bytes:
+            result = result * 256 + int(b)
+
+        return result
+
+    def int_to_bytes(self, value, length):
+        result = []
+
+        for i in range(0, length):
+            result.append(value >> (i * 8) & 0xff)
+
+        result.reverse()
+
+        return result
 
     def recv_thread(self):
         # 서버, 클라이언트 소켓 판별
         if self.my_socket.socketType == video_cap.SERVER:
             while True:
-                totalData = 0
+                # dataSize = self.my_socket.targetSocket.recv(4)
+                # print(int.from_bytes(dataSize, byteorder='big'))
+                # data = self.my_socket.targetSocket.recv(int.from_bytes(dataSize, byteorder='big'))
+                #
+                # ba = QtCore.QByteArray(data)
+                # pixmap = QtGui.QPixmap()
+                # ok = pixmap.loadFromData(ba, "png")
+                # assert ok
+                bytes_buf = self.receive_all(self.my_socket.targetSocket, 4)
+                bytes_length = self.bytes_to_int(bytes_buf)
+                print("Rx Length = {} ".format(bytes_length))
+                byte_data = self.receive_all(self.my_socket.targetSocket, int(bytes_length))
+                # convert jpg image to matix
+                g_decode_img = np.frombuffer(byte_data, dtype=np.uint8)
+                g_decode_img = cv2.imdecode(g_decode_img, cv2.COLOR_RGB2BGR)
 
-                while True:
-                    data, addr = self.my_socket.my_socket.recv(1024)
-                    self.addr = addr
+                h, w, c = g_decode_img.shape
+                qImg = QtGui.QImage(g_decode_img.data, w, h, w * c, QtGui.QImage.Format_RGB888)
+                pixmap = QtGui.QPixmap.fromImage(qImg)
 
-                    totalData += data
-                    if sys.getsizeof(data) < 1024:
-                        break
-
-                ba = QtCore.QByteArray(totalData)
-                pixmap = QtGui.QPixmap()
-                ok = pixmap.loadFromData(ba, "PNG")
-                assert ok
-                print(type(pixmap))
                 self.cam_you.setPixmap(pixmap)
 
         elif self.my_socket.socketType == video_cap.CLIENT:
             while True:
-                totalData = 0
+                # dataSize = self.my_socket.my_socket.recv(4)
+                # print(int.from_bytes(dataSize, byteorder='big'))
+                # data = self.my_socket.my_socket.recv(int.from_bytes(dataSize, byteorder='big'))
+                #
+                # ba = QtCore.QByteArray(data)
+                # pixmap = QtGui.QPixmap()
+                # ok = pixmap.loadFromData(ba, "png")
+                # assert ok
+                #
+                # self.cam_you.setPixmap(pixmap)
+                bytes_buf = self.receive_all(self.my_socket.my_socket, 4)
+                bytes_length = self.bytes_to_int(bytes_buf)
+                print("Rx Length = {} ".format(bytes_length))
+                byte_data = self.receive_all(self.my_socket.my_socket, int(bytes_length))
+                # convert jpg image to matix
+                g_decode_img = np.frombuffer(byte_data, dtype=np.uint8)
+                g_decode_img = cv2.imdecode(g_decode_img, cv2.COLOR_RGB2BGR)
 
-                while True:
-                    data, addr = self.my_socket.my_socket.recv(1024)
+                h, w, c = g_decode_img.shape
+                qImg = QtGui.QImage(g_decode_img.data, w, h, w * c, QtGui.QImage.Format_RGB888)
+                pixmap = QtGui.QPixmap.fromImage(qImg)
 
-                    totalData += data
-                    if sys.getsizeof(data) < 1024:
-                        break
-
-                ba = QtCore.QByteArray(totalData)
-                pixmap = QtGui.QPixmap()
-                ok = pixmap.loadFromData(ba, "PNG")
-                assert ok
-                print(type(pixmap))
                 self.cam_you.setPixmap(pixmap)
-
-        else:
-            pass
-
-    def send_thread(self):
-        # 서버, 클라이언트 소켓 판별
-        if self.my_socket.socketType == video_cap.SERVER:
-            while True:
-                if self.my_image is None:
-                    continue
-
-                ba = QtCore.QByteArray()
-                buff = QtCore.QBuffer(ba)
-                buff.open(QtCore.QIODevice.WriteOnly)
-                ok = self.my_image.save(buff, "PNG")
-                assert ok
-                pixmap_bytes = ba.data()
-                print(type(pixmap_bytes))
-
-                if self.addr is not None:
-                    self.my_socket.my_socket.send(pixmap_bytes)
-
-        elif self.my_socket.socketType == video_cap.CLIENT:
-            while True:
-                if self.my_image is None:
-                    continue
-
-                ba = QtCore.QByteArray()
-                buff = QtCore.QBuffer(ba)
-                buff.open(QtCore.QIODevice.WriteOnly)
-                ok = self.my_image.save(buff, "PNG")
-                assert ok
-                pixmap_bytes = ba.data()
-                print(type(pixmap_bytes))
-
-                import sys
-                print(sys.getsizeof(pixmap_bytes))
-
-                self.my_socket.my_socket.send(pixmap_bytes)
-
         else:
             pass
 
@@ -306,12 +327,3 @@ class video_cap:
             self.isEng = False
         else:
             self.isEng = True
-
-# class cam_me_thread(threading.Thread):
-#     def __init__(self, video):
-#         threading.Thread.__init__(self)
-#         self.flag = threading.Event
-#         self.video = video
-#
-#     def run(self):
-#         self.video.capStart()

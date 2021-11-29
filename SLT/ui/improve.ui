@@ -145,6 +145,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_6">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="text">
          <string>9</string>
         </property>
@@ -359,610 +362,610 @@
  <resources/>
  <connections>
   <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_10</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>111</x>
-     <y>541</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>31</x>
-     <y>605</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_14</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>137</x>
-     <y>536</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>154</x>
-     <y>622</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_12</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>161</x>
-     <y>538</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>220</x>
-     <y>607</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_13</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>54</x>
-     <y>544</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>321</x>
-     <y>610</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_11</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>51</x>
-     <y>542</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>401</x>
-     <y>615</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_9</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_10</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>76</x>
-     <y>537</y>
+     <y>611</y>
     </hint>
     <hint type="destinationlabel">
-     <x>472</x>
-     <y>616</y>
+     <x>87</x>
+     <y>547</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_8</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_14</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>49</x>
-     <y>535</y>
+     <x>129</x>
+     <y>607</y>
     </hint>
     <hint type="destinationlabel">
-     <x>525</x>
-     <y>618</y>
+     <x>130</x>
+     <y>532</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_7</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_12</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>39</x>
+     <x>224</x>
+     <y>608</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
      <y>545</y>
     </hint>
-    <hint type="destinationlabel">
-     <x>614</x>
-     <y>615</y>
-    </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_6</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_13</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>43</x>
-     <y>538</y>
+     <x>298</x>
+     <y>619</y>
     </hint>
     <hint type="destinationlabel">
-     <x>711</x>
-     <y>618</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_number_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_5</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>95</x>
+     <x>65</x>
      <y>543</y>
     </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_11</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>383</x>
+     <y>613</y>
+    </hint>
     <hint type="destinationlabel">
-     <x>795</x>
-     <y>610</y>
+     <x>85</x>
+     <y>534</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_15</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_11</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>291</x>
-     <y>535</y>
+     <x>358</x>
+     <y>607</y>
     </hint>
     <hint type="destinationlabel">
-     <x>59</x>
-     <y>661</y>
+     <x>117</x>
+     <y>544</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_16</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_9</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>293</x>
-     <y>546</y>
+     <x>451</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
-     <x>140</x>
-     <y>669</y>
+     <x>120</x>
+     <y>538</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_17</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_8</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>327</x>
-     <y>550</y>
+     <x>561</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
-     <x>222</x>
-     <y>656</y>
+     <x>92</x>
+     <y>541</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_18</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_7</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>306</x>
-     <y>546</y>
+     <x>642</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>659</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_19</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>244</x>
+     <x>114</x>
      <y>536</y>
     </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>694</x>
+     <y>607</y>
+    </hint>
     <hint type="destinationlabel">
-     <x>406</x>
-     <y>658</y>
+     <x>131</x>
+     <y>539</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_20</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_5</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_number_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>236</x>
-     <y>533</y>
+     <x>759</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
-     <x>486</x>
-     <y>674</y>
+     <x>88</x>
+     <y>538</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_21</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_15</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>534</y>
+     <x>75</x>
+     <y>660</y>
     </hint>
     <hint type="destinationlabel">
-     <x>553</x>
-     <y>663</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_22</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>265</x>
-     <y>540</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>616</x>
-     <y>662</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_23</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>268</x>
-     <y>534</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>707</x>
-     <y>653</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_24</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>312</x>
-     <y>534</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>784</x>
-     <y>666</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_25</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>211</x>
-     <y>540</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>68</x>
-     <y>719</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_26</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>231</x>
-     <y>546</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>176</x>
-     <y>707</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_27</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>256</x>
+     <x>253</x>
      <y>541</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_16</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>661</y>
     </hint>
     <hint type="destinationlabel">
      <x>247</x>
-     <y>715</y>
+     <y>544</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_28</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_17</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>533</y>
+     <x>228</x>
+     <y>662</y>
     </hint>
     <hint type="destinationlabel">
-     <x>364</x>
-     <y>724</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_29</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>268</x>
-     <y>531</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>447</x>
-     <y>709</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_31</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>243</x>
-     <y>551</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>502</x>
-     <y>715</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_32</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>283</x>
-     <y>533</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>608</x>
-     <y>716</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_33</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>227</x>
-     <y>543</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>721</x>
-     <y>717</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_34</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>283</x>
-     <y>530</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>796</x>
-     <y>723</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_30</receiver>
-   <slot>setChecked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>226</x>
+     <x>270</x>
      <y>540</y>
     </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_18</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>306</x>
+     <y>659</y>
+    </hint>
     <hint type="destinationlabel">
-     <x>69</x>
-     <y>768</y>
+     <x>302</x>
+     <y>538</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_35</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_19</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
-     <y>547</y>
+     <x>372</x>
+     <y>668</y>
     </hint>
     <hint type="destinationlabel">
-     <x>208</x>
-     <y>770</y>
+     <x>283</x>
+     <y>542</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_36</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_20</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>287</x>
-     <y>541</y>
+     <x>441</x>
+     <y>664</y>
     </hint>
     <hint type="destinationlabel">
-     <x>329</x>
-     <y>770</y>
+     <x>283</x>
+     <y>551</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_37</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_21</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>258</x>
+     <x>527</x>
+     <y>658</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>548</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_22</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>603</x>
+     <y>664</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>218</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_23</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>686</x>
+     <y>662</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>307</x>
+     <y>540</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_24</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>768</x>
+     <y>661</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>543</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_25</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>715</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
      <y>545</y>
     </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_26</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>712</y>
+    </hint>
     <hint type="destinationlabel">
-     <x>438</x>
-     <y>766</y>
+     <x>256</x>
+     <y>548</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_38</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_27</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>278</x>
-     <y>537</y>
+     <x>249</x>
+     <y>714</y>
     </hint>
     <hint type="destinationlabel">
-     <x>569</x>
-     <y>766</y>
+     <x>275</x>
+     <y>534</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_39</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_28</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>284</x>
+     <x>331</x>
+     <y>713</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>277</x>
+     <y>534</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_29</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>418</x>
+     <y>713</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>539</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_31</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>707</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>307</x>
+     <y>538</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_32</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>598</x>
+     <y>716</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
      <y>533</y>
     </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_33</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>652</x>
+     <y>707</y>
+    </hint>
     <hint type="destinationlabel">
-     <x>625</x>
-     <y>766</y>
+     <x>279</x>
+     <y>542</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>push_btn_english_setting</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>pushButton_40</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>pushButton_34</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>273</x>
-     <y>547</y>
+     <x>764</x>
+     <y>723</y>
     </hint>
     <hint type="destinationlabel">
-     <x>776</x>
+     <x>291</x>
+     <y>540</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_30</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>758</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_35</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>771</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>285</x>
+     <y>534</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_36</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>758</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>544</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_37</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>761</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>285</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_38</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
      <y>759</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>530</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_39</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>617</x>
+     <y>767</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>543</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_40</sender>
+   <signal>released()</signal>
+   <receiver>push_btn_english_setting</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>741</x>
+     <y>760</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>538</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>push_btn_recognize</sender>
    <signal>released()</signal>
-   <receiver>push_btn_recognize</receiver>
-   <slot>click()</slot>
+   <receiver>label</receiver>
+   <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>430</x>
+     <x>476</x>
      <y>539</y>
     </hint>
     <hint type="destinationlabel">
-     <x>483</x>
-     <y>542</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>push_btn_close</sender>
-   <signal>released()</signal>
-   <receiver>push_btn_close</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>583</x>
-     <y>541</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>629</x>
-     <y>538</y>
+     <x>463</x>
+     <y>437</y>
     </hint>
    </hints>
   </connection>

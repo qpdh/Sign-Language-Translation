@@ -340,7 +340,7 @@ font:10pt &quot;나눔바른고딕&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>691</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -365,92 +365,12 @@ font:10pt &quot;나눔바른고딕&quot;;</string>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>335</x>
-     <y>700</y>
+     <x>491</x>
+     <y>707</y>
     </hint>
     <hint type="destinationlabel">
-     <x>638</x>
-     <y>678</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_engNum</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>textEdit_me</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>599</x>
-     <y>481</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>548</x>
-     <y>543</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_engNum</sender>
-   <signal>clicked()</signal>
-   <receiver>textEdit_you</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>604</x>
-     <y>465</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>483</x>
-     <y>597</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_setting</sender>
-   <signal>released()</signal>
-   <receiver>pushButton_setting</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>634</x>
-     <y>747</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>644</x>
-     <y>765</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_improve</sender>
-   <signal>released()</signal>
-   <receiver>pushButton_improve</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>514</x>
-     <y>752</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>559</x>
-     <y>771</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_help</sender>
-   <signal>released()</signal>
-   <receiver>pushButton_help</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>407</x>
-     <y>762</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>449</x>
-     <y>777</y>
+     <x>612</x>
+     <y>695</y>
     </hint>
    </hints>
   </connection>

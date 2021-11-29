@@ -1,13 +1,12 @@
-from setting import *
-from improve import *
-from pic import *
-#from video_cap import *
 from PyQt5 import QtGui
 import sys
-#import socket_module
+from SLT.modules import socket_module
 
-from_class = uic.loadUiType('main.ui')[0]
+from SLT.components.improve import *
+from SLT.components.setting import *
+from SLT.components.help import *
 
+from_class = uic.loadUiType('./ui/main.ui')[0]
 
 # 화면을 띄우는데 사용되는 class 선언
 class WindowClass(QMainWindow, from_class):
@@ -15,9 +14,6 @@ class WindowClass(QMainWindow, from_class):
         super().__init__()
         self.setupUi(self)
         self.initUI()
-
-        # 서버 소켓 생성
-        self.my_socket = socket_module.server_socket()
 
     def initUI(self):
         self.setFixedSize(700, 800)
@@ -35,8 +31,27 @@ class WindowClass(QMainWindow, from_class):
         self.pushButton_improve.clicked.connect(self.improveButtonListener)
 
         # 지화보기
-        self.pushButton_picture.clicked.connect(self.pictureButtonListener)
+        self.pushButton_help.clicked.connect(self.pictureButtonListener)
 
+    # 설정
+    def settingButtonListener(self):
+        #self.my_video_cap.stop()
+        win = SettingDialog()
+        win.showModal()
+
+    # 인식개선
+    def improveButtonListener(self):
+        print('improve button clicked')
+        # self.my_video_cap.stop()
+        win = ImproveDialog()
+        win.showModal()
+
+    # 지화보기
+    def pictureButtonListener(self):
+        print('pic button clicked')
+        # self.my_video_cap.stop()
+        win = PicDialog()
+        win.showModal()
 
     # 언어변경
     def changeLang(self):
@@ -45,44 +60,23 @@ class WindowClass(QMainWindow, from_class):
 
     # 통화 연결
     def call(self):
+        # 서버 소켓 생성
+        self.my_socket = socket_module.server_socket()
+
         print(self.my_video_cap.running)
 
         if self.my_video_cap.running:
             self.textEdit_me.clear()
-            self.cam_you.setPixmap(QtGui.QPixmap('stop.png'))
+            self.cam_you.setPixmap(QtGui.QPixmap('images/stop.png'))
             self.my_video_cap.stop()
         else:
             print('main.call (running state : false)')
             self.my_video_cap.start()
 
-    # 설정
-    def settingButtonListener(self):
-        self.my_video_cap.stop()
-        win = SettingDialog()
-        win.showModal()
-
-        print('setting button clicked')
-
-    # 인식개선
-    def improveButtonListener(self):
-        self.my_video_cap.stop()
-        win = ImproveDialog()
-        win.showModal()
-
-        print('improve button clicked')
-
-    # 지화보기
-    def pictureButtonListener(self):
-        self.my_video_cap.stop()
-        win = PicDialog()
-        win.showModal()
-
-        print('pic button clicked')
-
     def show(self):
         super().show()
-        self.my_video_cap = video_cap(self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you )
-        self.my_video_cap.start()
+        # self.my_video_cap = video_cap(self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you)
+        # self.my_video_cap.start()
 
 
 if __name__ == "__main__":
