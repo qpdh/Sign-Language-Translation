@@ -150,6 +150,7 @@ class VideoCapture:
                                             if self.editText_me is None:
                                                 pass
                                             else:
+                                                self.editText_me.clear()
                                                 self.editText_me.insertPlainText(sentence[-1])
                             else:
                                 sentence.append(index)
@@ -157,6 +158,7 @@ class VideoCapture:
                                 if self.editText_me is None:
                                     pass
                                 else:
+                                    self.editText_me.clear()
                                     self.editText_me.insertPlainText(sentence[-1])
 
                 # 화면 출력용 리사이즈
@@ -217,6 +219,7 @@ class VideoCapture:
         print('stop (running state) : ', self.running)
         try:
             self.running = False
+            self.th.daemon = True
             self.th.join()
             self.th = None
             print('stop (thread joined)')
@@ -229,6 +232,7 @@ class VideoCapture:
         self.make_thread()
         print('start : call make_thread')
         self.th.start()
+        self.th.daemon = True
         print('start (th state) :', self.th)
 
     def on_exit(self):

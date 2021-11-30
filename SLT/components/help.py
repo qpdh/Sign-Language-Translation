@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5 import QtCore
 
-from_class = uic.loadUiType('./ui/help.ui')[0]
+from_class = uic.loadUiType('../ui/help.ui')[0]
 
 # 화면을 띄우는데 사용되는 class 선언
 class PicDialog(QDialog, from_class):
