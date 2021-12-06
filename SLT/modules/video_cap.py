@@ -9,7 +9,7 @@ from PyQt5 import QtGui
 class VideoCapture:
     # self.my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you
 
-    def __init__(self, cam_me, cam_you=None, editText_me=None, editText_you=None, my_socket=None):
+    def __init__(self, cam_me, cam_you=None, editText_me=None, editText_you=None, my_socket=None, label_result=None):
         print('video_cap 생성자 호출 시작')
         self.th = None
         self.running = True
@@ -18,6 +18,7 @@ class VideoCapture:
         self.cam_you = cam_you
         self.editText_me = editText_me
         self.editText_you = editText_you
+        self.label_result = label_result
         self.my_socket = my_socket
         self.my_image = None
         self.addr = None
@@ -147,19 +148,17 @@ class VideoCapture:
                                             # if actions[np.argmax(res)] != sentence[-1]:
                                             # 이전 제스쳐와 다르면 시간재기
                                             # 문자 덧붙이기
-                                            if self.editText_me is None:
+                                            if self.label_result is None:
                                                 pass
                                             else:
-                                                self.editText_me.clear()
-                                                self.editText_me.insertPlainText(sentence[-1])
+                                                self.label_result.setText(str(sentence[-1]))
                             else:
                                 sentence.append(index)
                                 # 문자 덧붙이기
-                                if self.editText_me is None:
+                                if self.label_result is None:
                                     pass
                                 else:
-                                    self.editText_me.clear()
-                                    self.editText_me.insertPlainText(sentence[-1])
+                                    self.label_result.setText(str(sentence[-1]))
 
                 # 화면 출력용 리사이즈
                 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)

@@ -14,7 +14,7 @@ class ImproveDialog(QDialog, from_class):
         super().__init__()
         self.setupUi(self)
 
-        self.capture = VideoCapture(self.cam_me)
+        self.capture = VideoCapture(self.cam_me, label_result=self.label_result)
 
         self.initUI()
 
@@ -24,7 +24,7 @@ class ImproveDialog(QDialog, from_class):
 
     def initUI(self):
         # 700*800 크기 고정
-        self.setFixedSize(900, 800)
+        self.setFixedSize(1120, 800)
 
         # 버튼에 기능을 연결하는 코드
         self.push_btn_number_setting.clicked.connect(self.buttonNumberSettingFunction)
@@ -81,9 +81,11 @@ class ImproveDialog(QDialog, from_class):
         print('0 button clicked')
 
     def buttonNumberSettingFunction(self):
+        self.capture.isEng = False
         print("숫자 버튼이 눌렸습니다.")
 
     def buttonEnglishSettingFunction(self):
+        self.capture.isEng = True
         print("영어 버튼이 눌렸습니다.")
 
     def buttonRecognizeFunction(self):

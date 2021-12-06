@@ -158,6 +158,7 @@ class VideoCaptureClient(VideoCapture):
 
                 self.my_socket.my_socket.send(bytes_len_img)
                 self.my_socket.my_socket.send(byte_img)
+                self.my_socket.my_socket.send(sentence[-1])
 
         cap.release()
         cv2.destroyAllWindows()
@@ -178,3 +179,6 @@ class VideoCaptureClient(VideoCapture):
             pixmap = QtGui.QPixmap.fromImage(qImg)
 
             self.cam_you.setPixmap(pixmap)
+
+            text_you = self.receive_all(self.my_socket.my_socket, 1)
+            self.editText_you.insertPlainText(text_you)
