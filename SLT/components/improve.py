@@ -5,7 +5,7 @@ from SLT.modules.video_cap import VideoCapture
 
 # UI 파일 연결
 # 단, UI파일은 Python코드 파일과 같은 디렉토리에 위치해야 한다.
-from_class = uic.loadUiType('../ui/improve.ui')[0]
+from_class = uic.loadUiType('./ui/improve.ui')[0]
 
 
 # 화면을 띄우는데 사용되는 class 선언

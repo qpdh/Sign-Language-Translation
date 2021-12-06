@@ -2,7 +2,7 @@ from SLT.components.improve import *
 from SLT.components.setting import *
 from SLT.components.help import *
 
-from_class = uic.loadUiType('../ui/main.ui')[0]
+from_class = uic.loadUiType('./ui/main.ui')[0]
 
 
 # 화면을 띄우는데 사용되는 class 선언

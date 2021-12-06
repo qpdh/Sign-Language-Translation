@@ -14,19 +14,20 @@ class WindowClass(MainModule):
     # 통화 연결
     def call(self):
         # 서버 소켓 생성
+        # print(self.my_video_cap.running)
+
+        print('test')
         my_socket = socket_module.server_socket()
 
-        print(self.my_video_cap.running)
+        # if self.my_video_cap.running:
+        #     self.textEdit_me.clear()
+        #     self.cam_you.setPixmap(QtGui.QPixmap('images/stop.png'))
+        #     self.my_video_cap.stop()
+        # else:
+        #     print('main.call (running state : false)')
+        #     self.my_video_cap.start()
 
-        if self.my_video_cap.running:
-            self.textEdit_me.clear()
-            self.cam_you.setPixmap(QtGui.QPixmap('images/stop.png'))
-            self.my_video_cap.stop()
-        else:
-            print('main.call (running state : false)')
-            self.my_video_cap.start()
-
-        my_video_cap = VideoCaptureServer(my_socket, self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you)
+        my_video_cap = VideoCaptureServer(self.cam_me, self.cam_you, self.textEdit_me, self.textEdit_you, my_socket)
         my_video_cap.start()
 
 

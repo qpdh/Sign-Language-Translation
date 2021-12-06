@@ -14,7 +14,7 @@ class WindowClass(MainModule):
 
     # 통화 연결
     def call(self):
-        print(self.my_video_cap.running)
+        # print(self.my_video_cap.running)
 
         # 아이피 가져오기
         ip = self.textEdit_ip.toPlainText()
@@ -22,16 +22,16 @@ class WindowClass(MainModule):
         # 클라이언트 소켓 생성
         my_socket = socket_module.client_socket(ip)
 
-        if self.my_video_cap.running:
-            self.textEdit_me.clear()
-            self.cam_you.setPixmap(QtGui.QPixmap('images/stop.png'))
-            self.my_video_cap.stop()
-        else:
-            print('main.call (running state : false)')
-            self.my_video_cap.start()
+        # if self.my_video_cap.running:
+        #     self.textEdit_me.clear()
+        #     self.cam_you.setPixmap(QtGui.QPixmap('images/stop.png'))
+        #     self.my_video_cap.stop()
+        # else:
+        #     print('main.call (running state : false)')
+        #     self.my_video_cap.start()
 
-        my_video_cap = VideoCaptureClient(my_socket, self.cam_me, self.cam_you, self.textEdit_me,
-                                          self.textEdit_you)
+        my_video_cap = VideoCaptureClient(self.cam_me, self.cam_you, self.textEdit_me,
+                                          self.textEdit_you, my_socket)
         my_video_cap.start()
 
 

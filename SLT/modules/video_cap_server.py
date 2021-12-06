@@ -158,23 +158,25 @@ class VideoCaptureServer(VideoCapture):
 
                 self.my_socket.targetSocket.send(bytes_len_img)
                 self.my_socket.targetSocket.send(byte_img)
+
         cap.release()
         cv2.destroyAllWindows()
 
     #################################################
 
     def recv_thread(self):
-        # 서버, 클라이언트 소켓 판별
-        bytes_buf = self.receive_all(self.my_socket.targetSocket, 4)
-        bytes_length = self.bytes_to_int(bytes_buf)
-        print("Rx Length = {} ".format(bytes_length))
-        byte_data = self.receive_all(self.my_socket.targetSocket, int(bytes_length))
-        # convert jpg image to matix
-        g_decode_img = np.frombuffer(byte_data, dtype=np.uint8)
-        g_decode_img = cv2.imdecode(g_decode_img, cv2.COLOR_RGB2BGR)
+        while True:
+            # 서버, 클라이언트 소켓 판별
+            bytes_buf = self.receive_all(self.my_socket.targetSocket, 4)
+            bytes_length = self.bytes_to_int(bytes_buf)
+            print("Rx Length = {} ".format(bytes_length))
+            byte_data = self.receive_all(self.my_socket.targetSocket, int(bytes_length))
+            # convert jpg image to matix
+            g_decode_img = np.frombuffer(byte_data, dtype=np.uint8)
+            g_decode_img = cv2.imdecode(g_decode_img, cv2.COLOR_RGB2BGR)
 
-        h, w, c = g_decode_img.shape
-        qImg = QtGui.QImage(g_decode_img.data, w, h, w * c, QtGui.QImage.Format_RGB888)
-        pixmap = QtGui.QPixmap.fromImage(qImg)
+            h, w, c = g_decode_img.shape
+            qImg = QtGui.QImage(g_decode_img.data, w, h, w * c, QtGui.QImage.Format_RGB888)
+            pixmap = QtGui.QPixmap.fromImage(qImg)
 
-        self.cam_you.setPixmap(pixmap)
+            self.cam_you.setPixmap(pixmap)

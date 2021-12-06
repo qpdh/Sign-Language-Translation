@@ -232,7 +232,7 @@ class VideoCapture:
         self.make_thread()
         print('start : call make_thread')
         self.th.start()
-        self.th.daemon = True
+        #self.th.daemon = True
         print('start (th state) :', self.th)
 
     def on_exit(self):
