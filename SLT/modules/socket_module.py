@@ -23,6 +23,10 @@ class server_socket:
 
         self.socketType = 0
 
+    def close(self):
+        self.targetSocket.close()
+        self.my_socket.close()
+
 
 class client_socket:
     # 포트번호
@@ -34,3 +38,6 @@ class client_socket:
         self.my_socket.connect((ip, client_socket.PORT))
 
         self.socketType = 1
+
+    def close(self):
+        self.my_socket.close()

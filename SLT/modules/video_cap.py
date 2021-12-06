@@ -219,10 +219,12 @@ class VideoCapture:
         print('stop (running state) : ', self.running)
         try:
             self.running = False
-            self.th.daemon = True
+            #self.th.daemon = True
             self.th.join()
             self.th = None
             print('stop (thread joined)')
+            if self.my_socket is not None:
+                self.my_socket.close()
         except AttributeError:
             print('join pass')
 

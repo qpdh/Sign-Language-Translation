@@ -19,7 +19,7 @@ class MainModule(QMainWindow, from_class):
         self.pushButton_engNum.clicked.connect(self.changeLang)
 
         # 통화 연결
-        self.pushButton_call.clicked.connect(self.call)
+        self.pushButton_call.clicked[bool].connect(self.call)
 
         # 설정
         self.pushButton_setting.clicked.connect(self.settingButtonListener)
